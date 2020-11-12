@@ -27,6 +27,7 @@ public class PagerFragment extends Fragment {
     }
     interface PagerFragmentInterface{
         ArrayList<PageViewerFragment> getPageViewerList();
+        void updateNewUrl(String url);
     }
 
     @Override
@@ -66,12 +67,23 @@ public class PagerFragment extends Fragment {
                 return viewerFragmentsArray.size();
             }
         });
+
         myViewPager.addOnPageChangeListener( new ViewPager.SimpleOnPageChangeListener(){
             @Override
             public void onPageSelected(int position) {
                 if(viewerFragmentsArray.get(position).webView.getTitle() != null ){
                     getActivity().setTitle(viewerFragmentsArray.get(position).webView.getTitle());
                 }
+                String url = viewerFragmentsArray.get(position).webView.getUrl();
+                if(url == null){
+                    pagerFragmentListener.updateNewUrl("https:// Enter a url");
+                }
+                if(url != null){
+                    pagerFragmentListener.updateNewUrl(url);
+                }
+
+
+
             }
         });
 

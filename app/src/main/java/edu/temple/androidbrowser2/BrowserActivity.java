@@ -123,9 +123,11 @@ public class BrowserActivity extends AppCompatActivity implements PageViewerFrag
 
     @Override
     public void openNewPage() {
+        //just to prevent it from crashing when attempting to open multiple pages in landscape
         if(viewerArray == null){
             viewerArray.add( new PageViewerFragment());
         }
+        //add pages. Profit!
         viewerArray.add(new PageViewerFragment());
         pagerFragment.myViewPager.getAdapter().notifyDataSetChanged();
 
@@ -136,6 +138,11 @@ public class BrowserActivity extends AppCompatActivity implements PageViewerFrag
     @Override
     public ArrayList<PageViewerFragment> getPageViewerList() {
         return viewerArray;
+    }
+
+    @Override
+    public void updateNewUrl(String url) {
+        pageControlFragment.editText.setText(url);
     }
 
     @Override
