@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -41,34 +42,49 @@ public class PageViewerFragment extends Fragment implements Serializable {
         }
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
 
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        webView.saveState(outState);
+    }
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        setRetainInstance(true);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        if(savedInstanceState != null){
-
-        }else {
+        //restore web session
+        if(savedInstanceState == null){
             v = inflater.inflate(R.layout.fragment_page_viewer, container, false);
             webView = v.findViewById(R.id.web_view);
             webView.getSettings().setJavaScriptEnabled(true);
-            myWebClient wb = new myWebClient();
-            webView.setWebViewClient(wb);
+            webView.setWebViewClient(new WebViewClient(){
+                @Override
+                public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                    super.onPageStarted(view, url, favicon);
+                    pvListener.updateURL(url);
+                }
+            });
+            if(savedInstanceState != null){
+                webView.restoreState(savedInstanceState);
+            }
         }
+
         return v;
     }
-    public class myWebClient extends WebViewClient{
-        @Override
-        public void onPageFinished (WebView webView, String url) {
-            super.onPageFinished(webView, url);
-            pvListener.updateURL(url);
-        }
-    }
+
     public void goFor(){
         webView.goForward();
     }
