@@ -97,4 +97,7 @@ public class PageViewerFragment extends Fragment implements Serializable {
         Log.e("Check", url);
         webView.loadUrl(url);
     }
+    public String getLink(){
+        return webView.getTitle();
+    }
 }

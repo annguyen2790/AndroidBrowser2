@@ -46,7 +46,7 @@ public class PageViewerFragmentAdapter extends BaseAdapter {
             itemText = (TextView) view;
         }else{
             itemText = new TextView(context);
-
+            itemText.setText(viewerArray.get(i).webView.getTitle());
 
         }
         return itemText;

@@ -92,6 +92,6 @@ public class PageControlFragment extends Fragment {
         return v;
     }
     public void refreshUrl (String url) {
-        editText.setText(url, TextView.BufferType.NORMAL);
+        editText.setText(url);
     }
 }
