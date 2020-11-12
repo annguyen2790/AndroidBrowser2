@@ -5,8 +5,11 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 
 import java.util.ArrayList;
+import java.io.Serializable;
 
 public class BrowserActivity extends AppCompatActivity implements PageViewerFragment.pageViewerInterface, PageControlFragment.PageControlListener,
     BrowserControlFragment.browserControlInterface, PagerFragment.PagerFragmentInterface{
@@ -15,15 +18,19 @@ public class BrowserActivity extends AppCompatActivity implements PageViewerFrag
     FragmentManager fragmentManager;
     PageControlFragment pageControlFragment;
     BrowserControlFragment browserControlFragment;
+    PageListFragment pageListFragment;
     ArrayList<PageViewerFragment> viewerArray;
+    private static final String LIST_KEY = "fragments";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_browser);
-        if(savedInstanceState == null){
+        if (savedInstanceState != null) {
+            viewerArray = (ArrayList<PageViewerFragment>) savedInstanceState.getSerializable(LIST_KEY);
+        } else {
             viewerArray = new ArrayList<>();
-        }else{
-
         }
         addFragments();
 
@@ -61,8 +68,14 @@ public class BrowserActivity extends AppCompatActivity implements PageViewerFrag
 
         }
         //add pageList
-
-
+        if((temp = fragmentManager.findFragmentById(R.id.page_list) )instanceof PageListFragment){
+            pageListFragment = (PageListFragment) temp;
+        }else{
+            pageListFragment = new PageListFragment();
+            fragmentManager.beginTransaction()
+                    .add(R.id.page_list, pageListFragment)
+                    .commit();
+        }
 
 
 
@@ -70,31 +83,47 @@ public class BrowserActivity extends AppCompatActivity implements PageViewerFrag
 
     @Override
     public void updateURL(String url) {
-
+        pageControlFragment.refreshUrl(url);
     }
 
     @Override
     public void forwardPress() {
-
+        viewerArray.get(pagerFragment.myViewPager.getCurrentItem()).goFor();
     }
 
     @Override
     public void backPress() {
-
+        viewerArray.get(pagerFragment.myViewPager.getCurrentItem()).goBackward();
     }
 
     @Override
     public void okPress(String urlInput) {
+        if(viewerArray.size() == 0){
+            openNewPage();
+        }
+        if(!urlInput.startsWith("https://")){
+            viewerArray.get(pagerFragment.myViewPager.getCurrentItem()).okPressed("https://" + urlInput);
+        }else {
+            viewerArray.get(pagerFragment.myViewPager.getCurrentItem()).okPressed(urlInput);
+        }
+
 
     }
 
     @Override
     public void openNewPage() {
-
+        viewerArray.add(new PageViewerFragment());
+        pagerFragment.myViewPager.getAdapter().notifyDataSetChanged();
     }
 
     @Override
     public ArrayList<PageViewerFragment> getPageViewerList() {
         return viewerArray;
+    }
+
+    @Override
+    protected void onSaveInstanceState (Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable(LIST_KEY, viewerArray);
     }
 }

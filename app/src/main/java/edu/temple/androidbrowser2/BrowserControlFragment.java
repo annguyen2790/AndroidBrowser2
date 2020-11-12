@@ -47,6 +47,12 @@ public class BrowserControlFragment extends Fragment {
         // Inflate the layout for this fragment
         v = inflater.inflate(R.layout.fragment_browser_control, container, false);
         addTab = v.findViewById(R.id.add_tab_button);
+        addTab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                browserControlListner.openNewPage();
+            }
+        });
 
         return v;
     }

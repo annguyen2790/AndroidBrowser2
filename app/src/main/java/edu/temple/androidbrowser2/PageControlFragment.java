@@ -5,11 +5,13 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 
 public class PageControlFragment extends Fragment {
@@ -66,6 +68,7 @@ public class PageControlFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 String input = editText.getText().toString();
+                Log.e("check input", input);
                 listener.okPress(input);
             }
         });
@@ -87,5 +90,8 @@ public class PageControlFragment extends Fragment {
 
 
         return v;
+    }
+    public void refreshUrl (String url) {
+        editText.setText(url, TextView.BufferType.NORMAL);
     }
 }
