@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.io.Serializable;
@@ -88,11 +89,13 @@ public class BrowserActivity extends AppCompatActivity implements PageViewerFrag
 
     @Override
     public void forwardPress() {
+
         viewerArray.get(pagerFragment.myViewPager.getCurrentItem()).goFor();
     }
 
     @Override
     public void backPress() {
+
         viewerArray.get(pagerFragment.myViewPager.getCurrentItem()).goBackward();
     }
 
@@ -114,6 +117,7 @@ public class BrowserActivity extends AppCompatActivity implements PageViewerFrag
     public void openNewPage() {
         viewerArray.add(new PageViewerFragment());
         pagerFragment.myViewPager.getAdapter().notifyDataSetChanged();
+
     }
 
     @Override
