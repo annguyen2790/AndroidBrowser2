@@ -3,6 +3,7 @@ package edu.temple.androidbrowser2;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -13,7 +14,7 @@ import java.util.ArrayList;
 import java.io.Serializable;
 
 public class BrowserActivity extends AppCompatActivity implements PageViewerFragment.pageViewerInterface, PageControlFragment.PageControlListener,
-    BrowserControlFragment.browserControlInterface, PagerFragment.PagerFragmentInterface{
+    BrowserControlFragment.browserControlInterface, PagerFragment.PagerFragmentInterface, PageListFragment.PageListInterface {
 
     PagerFragment pagerFragment;
     FragmentManager fragmentManager;
@@ -69,13 +70,15 @@ public class BrowserActivity extends AppCompatActivity implements PageViewerFrag
 
         }
         //add pageList
-        if((temp = fragmentManager.findFragmentById(R.id.page_list) )instanceof PageListFragment){
-            pageListFragment = (PageListFragment) temp;
-        }else{
-            pageListFragment = new PageListFragment();
-            fragmentManager.beginTransaction()
-                    .add(R.id.page_list, pageListFragment)
-                    .commit();
+        if(findViewById(R.id.page_list) != null) {
+            if ((temp = fragmentManager.findFragmentById(R.id.page_list)) instanceof PageListFragment) {
+                pageListFragment = (PageListFragment) temp;
+            } else {
+                pageListFragment = new PageListFragment();
+                fragmentManager.beginTransaction()
+                        .add(R.id.page_list, pageListFragment)
+                        .commit();
+            }
         }
 
 
@@ -129,5 +132,15 @@ public class BrowserActivity extends AppCompatActivity implements PageViewerFrag
     protected void onSaveInstanceState (Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putSerializable(LIST_KEY, viewerArray);
+    }
+
+    @Override
+    public ArrayList<PageViewerFragment> getArray() {
+        return viewerArray;
+    }
+
+    @Override
+    public ViewPager getViewPager() {
+        return pagerFragment.myViewPager;
     }
 }

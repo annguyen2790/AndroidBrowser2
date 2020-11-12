@@ -4,6 +4,9 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.TextView;
+
+import androidx.viewpager.widget.ViewPager;
 
 import java.util.ArrayList;
 
@@ -11,10 +14,14 @@ public class PageViewerFragmentAdapter extends BaseAdapter {
 
     ArrayList<PageViewerFragment> viewerArray;
     final Context context;
+    TextView itemText;
+    ViewPager viewPager;
 
-    public PageViewerFragmentAdapter(Context context, ArrayList<PageViewerFragment> viewerArray){
+
+    public PageViewerFragmentAdapter(Context context, ArrayList<PageViewerFragment> viewerArray, ViewPager viewPager){
         this.viewerArray = viewerArray;
         this.context = context;
+        this.viewPager = viewPager;
     }
 
 
@@ -35,6 +42,14 @@ public class PageViewerFragmentAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        return null;
+        if(view != null){
+            itemText = (TextView) view;
+        }else{
+            itemText = new TextView(context);
+
+
+        }
+        return itemText;
     }
+
 }
