@@ -66,6 +66,7 @@ public class PageListFragment extends Fragment {
                 viewPager.setCurrentItem(i);
             }
         });
+
         return v;
     }
 

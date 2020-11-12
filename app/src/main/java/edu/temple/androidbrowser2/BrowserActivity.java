@@ -21,7 +21,7 @@ public class BrowserActivity extends AppCompatActivity implements PageViewerFrag
     PageControlFragment pageControlFragment;
     BrowserControlFragment browserControlFragment;
     PageListFragment pageListFragment;
-    ArrayList<PageViewerFragment> viewerArray;
+    public ArrayList<PageViewerFragment> viewerArray;
     private static final String LIST_KEY = "fragments";
 
 
@@ -34,6 +34,7 @@ public class BrowserActivity extends AppCompatActivity implements PageViewerFrag
         } else {
             viewerArray = new ArrayList<>();
         }
+
         addFragments();
 
 
@@ -107,9 +108,13 @@ public class BrowserActivity extends AppCompatActivity implements PageViewerFrag
         if(viewerArray.size() == 0){
             openNewPage();
         }
+
+
         if(!urlInput.startsWith("https://")){
+
             viewerArray.get(pagerFragment.myViewPager.getCurrentItem()).okPressed("https://" + urlInput);
         }else {
+
             viewerArray.get(pagerFragment.myViewPager.getCurrentItem()).okPressed(urlInput);
         }
 
@@ -118,8 +123,13 @@ public class BrowserActivity extends AppCompatActivity implements PageViewerFrag
 
     @Override
     public void openNewPage() {
+        if(viewerArray == null){
+            viewerArray.add( new PageViewerFragment());
+        }
         viewerArray.add(new PageViewerFragment());
         pagerFragment.myViewPager.getAdapter().notifyDataSetChanged();
+
+
 
     }
 
