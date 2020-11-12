@@ -88,7 +88,7 @@ public class BrowserActivity extends AppCompatActivity implements PageViewerFrag
 
     @Override
     public void updateURL(String url) {
-        pageControlFragment.refreshUrl(url);
+        pageControlFragment.editText.setText(viewerArray.get(pagerFragment.myViewPager.getCurrentItem()).webView.getUrl());
     }
 
     @Override

@@ -66,6 +66,14 @@ public class PagerFragment extends Fragment {
                 return viewerFragmentsArray.size();
             }
         });
+        myViewPager.addOnPageChangeListener( new ViewPager.SimpleOnPageChangeListener(){
+            @Override
+            public void onPageSelected(int position) {
+                if(viewerFragmentsArray.get(position).webView.getTitle() != null ){
+                    getActivity().setTitle(viewerFragmentsArray.get(position).webView.getTitle());
+                }
+            }
+        });
 
 
         return v;
