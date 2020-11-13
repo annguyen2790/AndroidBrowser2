@@ -130,7 +130,7 @@ public class BrowserActivity extends AppCompatActivity implements PageViewerFrag
         //add pages. Profit!
         viewerArray.add(new PageViewerFragment());
         pagerFragment.myViewPager.getAdapter().notifyDataSetChanged();
-        pagerFragment.myViewPager.setCurrentItem(pagerFragment.myViewPager.getCurrentItem() + 1);
+        pagerFragment.myViewPager.setCurrentItem(viewerArray.size()  - 1);
 
 
 

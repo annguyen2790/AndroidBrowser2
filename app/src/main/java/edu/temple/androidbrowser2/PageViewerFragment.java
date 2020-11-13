@@ -42,8 +42,6 @@ public class PageViewerFragment extends Fragment implements Serializable {
         }
     }
 
-
-
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
