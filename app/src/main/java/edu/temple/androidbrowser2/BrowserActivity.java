@@ -4,14 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager.widget.ViewPager;
-
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.Toast;
-
 import java.util.ArrayList;
-import java.io.Serializable;
+
 
 public class BrowserActivity extends AppCompatActivity implements PageViewerFragment.pageViewerInterface, PageControlFragment.PageControlListener,
     BrowserControlFragment.browserControlInterface, PagerFragment.PagerFragmentInterface, PageListFragment.PageListInterface {
@@ -29,12 +24,13 @@ public class BrowserActivity extends AppCompatActivity implements PageViewerFrag
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_browser);
+        /*Get back the original reference of the array list of pageViewerFragment*/
         if (savedInstanceState != null) {
             viewerArray = (ArrayList<PageViewerFragment>) savedInstanceState.getSerializable(LIST_KEY);
         } else {
             viewerArray = new ArrayList<>();
         }
-
+        /*To have less confusion in onCreate()*/
         addFragments();
 
 
@@ -105,16 +101,16 @@ public class BrowserActivity extends AppCompatActivity implements PageViewerFrag
 
     @Override
     public void okPress(String urlInput) {
+        /*So null pointer error would not crash the app when user did not add a new tab*/
         if(viewerArray.size() == 0){
             openNewPage();
         }
-
-
+        /*Load the url*/
         if(!urlInput.startsWith("https://")){
-
+            pageControlFragment.editText.setText(urlInput);
             viewerArray.get(pagerFragment.myViewPager.getCurrentItem()).okPressed("https://" + urlInput);
         }else {
-
+            pageControlFragment.editText.setText(urlInput);
             viewerArray.get(pagerFragment.myViewPager.getCurrentItem()).okPressed(urlInput);
         }
 

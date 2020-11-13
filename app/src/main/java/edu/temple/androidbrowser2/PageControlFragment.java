@@ -3,6 +3,7 @@ package edu.temple.androidbrowser2;
 import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -31,7 +32,7 @@ public class PageControlFragment extends Fragment {
         // Required empty public constructor
     }
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         if (context instanceof PageControlListener) {
             listener = (PageControlListener) context;
@@ -91,7 +92,5 @@ public class PageControlFragment extends Fragment {
 
         return v;
     }
-    public void refreshUrl (String url) {
-        editText.setText(url);
-    }
+
 }

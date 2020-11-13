@@ -42,6 +42,8 @@ public class PageViewerFragment extends Fragment implements Serializable {
         }
     }
 
+
+
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -60,7 +62,7 @@ public class PageViewerFragment extends Fragment implements Serializable {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         //restore web session
