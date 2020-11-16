@@ -1,6 +1,7 @@
 package edu.temple.androidbrowser2;
 
 import android.content.Context;
+import android.media.Image;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,9 +11,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 public class BrowserControlFragment extends Fragment {
     ImageButton addTab;
+    ImageButton addBookmark;
+    ImageButton goToBookmark;
     View v;
 
     browserControlInterface browserControlListner;
@@ -53,6 +57,24 @@ public class BrowserControlFragment extends Fragment {
                 browserControlListner.openNewPage();
             }
         });
+
+        addBookmark =  v.findViewById(R.id.add_bookmark);
+        addBookmark.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getActivity(), "Adding Bookmark", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        goToBookmark = v.findViewById(R.id.bookMark);
+        goToBookmark.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getActivity(), "Going to Bookmark ", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
 
         return v;
     }
