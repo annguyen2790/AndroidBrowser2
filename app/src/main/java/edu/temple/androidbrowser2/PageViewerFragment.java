@@ -93,10 +93,8 @@ public class PageViewerFragment extends Fragment implements Serializable {
         webView.goBack();
     }
 
-    public void okPressed(String url){
-        Log.e("Check", url);
-        webView.loadUrl(url);
-    }
+    public void okPressed(String url){ webView.loadUrl(url); }
+
     public String getLink(){
         return webView.getTitle();
     }

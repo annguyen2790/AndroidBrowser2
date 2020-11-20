@@ -13,7 +13,9 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-public class BrowserControlFragment extends Fragment {
+import java.io.Serializable;
+
+public class BrowserControlFragment extends Fragment implements Serializable {
     ImageButton addTab;
     ImageButton addBookmark;
     ImageButton goToBookmark;
@@ -27,6 +29,8 @@ public class BrowserControlFragment extends Fragment {
 
     interface browserControlInterface{
         void openNewPage();
+        void goToBookmarks();
+        void addBookmarks();
     }
 
     @Override
@@ -63,6 +67,7 @@ public class BrowserControlFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Toast.makeText(getActivity(), "Adding Bookmark", Toast.LENGTH_SHORT).show();
+                browserControlListner.addBookmarks();
             }
         });
 
@@ -71,6 +76,7 @@ public class BrowserControlFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Toast.makeText(getActivity(), "Going to Bookmark ", Toast.LENGTH_SHORT).show();
+                browserControlListner.goToBookmarks();
             }
         });
 

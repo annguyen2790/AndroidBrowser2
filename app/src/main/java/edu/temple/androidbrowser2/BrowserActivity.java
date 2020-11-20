@@ -4,12 +4,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager.widget.ViewPager;
+
+import android.content.Intent;
 import android.os.Bundle;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 
 
 public class BrowserActivity extends AppCompatActivity implements PageViewerFragment.pageViewerInterface, PageControlFragment.PageControlListener,
-    BrowserControlFragment.browserControlInterface, PagerFragment.PagerFragmentInterface, PageListFragment.PageListInterface {
+    BrowserControlFragment.browserControlInterface, PagerFragment.PagerFragmentInterface, PageListFragment.PageListInterface, Serializable {
 
     PagerFragment pagerFragment;
     FragmentManager fragmentManager;
@@ -129,6 +133,17 @@ public class BrowserActivity extends AppCompatActivity implements PageViewerFrag
         pagerFragment.myViewPager.setCurrentItem(viewerArray.size()  - 1);
 
 
+
+    }
+
+    @Override
+    public void goToBookmarks() {
+        Intent goToBookMarkActivity = new Intent(getApplicationContext(), BookMarkActivity.class);
+        startActivity(goToBookMarkActivity);
+    }
+
+    @Override
+    public void addBookmarks() {
 
     }
 
