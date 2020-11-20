@@ -22,6 +22,8 @@ public class PagerFragment extends Fragment {
     PagerFragmentInterface pagerFragmentListener;
     ArrayList<PageViewerFragment> viewerFragmentsArray;
 
+    private static final String LIST_KEY = "fragments";
+
     public PagerFragment() {
         // Required empty public constructor
     }

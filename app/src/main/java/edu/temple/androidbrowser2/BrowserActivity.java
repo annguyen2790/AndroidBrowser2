@@ -7,13 +7,15 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
 
 public class BrowserActivity extends AppCompatActivity implements PageViewerFragment.pageViewerInterface, PageControlFragment.PageControlListener,
-    BrowserControlFragment.browserControlInterface, PagerFragment.PagerFragmentInterface, PageListFragment.PageListInterface, Serializable {
+    BrowserControlFragment.browserControlInterface, PagerFragment.PagerFragmentInterface, PageListFragment.PageListInterface {
 
     PagerFragment pagerFragment;
     FragmentManager fragmentManager;
@@ -108,6 +110,7 @@ public class BrowserActivity extends AppCompatActivity implements PageViewerFrag
         /*So null pointer error would not crash the app when user did not add a new tab*/
         if(viewerArray.size() == 0){
             openNewPage();
+            pagerFragment.myViewPager.getAdapter().notifyDataSetChanged();
         }
         /*Load the url*/
         if(!urlInput.startsWith("https://")){
@@ -126,6 +129,7 @@ public class BrowserActivity extends AppCompatActivity implements PageViewerFrag
         //just to prevent it from crashing when attempting to open multiple pages in landscape
         if(viewerArray == null){
             viewerArray.add( new PageViewerFragment());
+
         }
         //add pages. Profit!
         viewerArray.add(new PageViewerFragment());
@@ -172,4 +176,6 @@ public class BrowserActivity extends AppCompatActivity implements PageViewerFrag
     public ViewPager getViewPager() {
         return pagerFragment.myViewPager;
     }
+
+
 }

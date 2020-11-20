@@ -8,6 +8,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +20,7 @@ import android.webkit.WebViewClient;
 import java.io.Serializable;
 
 
-public class PageViewerFragment extends Fragment implements Serializable {
+public class PageViewerFragment extends Fragment  {
     View v;
     WebView webView;
     pageViewerInterface pvListener;
@@ -26,6 +28,8 @@ public class PageViewerFragment extends Fragment implements Serializable {
     public PageViewerFragment() {
         // Required empty public constructor
     }
+
+
 
     //declare interface to
     interface pageViewerInterface{
