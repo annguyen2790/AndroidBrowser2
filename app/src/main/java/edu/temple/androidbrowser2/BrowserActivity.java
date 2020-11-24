@@ -129,7 +129,7 @@ public class BrowserActivity extends AppCompatActivity implements PageViewerFrag
         //just to prevent it from crashing when attempting to open multiple pages in landscape
         if(viewerArray == null){
             viewerArray.add( new PageViewerFragment());
-
+            pagerFragment.myViewPager.getAdapter().notifyDataSetChanged();
         }
         //add pages. Profit!
         viewerArray.add(new PageViewerFragment());
