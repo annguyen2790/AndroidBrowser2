@@ -20,7 +20,7 @@ import android.webkit.WebViewClient;
 import java.io.Serializable;
 
 
-public class PageViewerFragment extends Fragment  {
+public class PageViewerFragment extends Fragment implements Parcelable  {
     View v;
     WebView webView;
     pageViewerInterface pvListener;
@@ -29,6 +29,29 @@ public class PageViewerFragment extends Fragment  {
         // Required empty public constructor
     }
 
+    protected PageViewerFragment(Parcel in) {
+    }
+
+    public static final Creator<PageViewerFragment> CREATOR = new Creator<PageViewerFragment>() {
+        @Override
+        public PageViewerFragment createFromParcel(Parcel in) {
+            return new PageViewerFragment(in);
+        }
+
+        @Override
+        public PageViewerFragment[] newArray(int size) {
+            return new PageViewerFragment[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+    }
 
 
     //declare interface to

@@ -6,14 +6,10 @@
     android:layout_height="match_parent"
     tools:context=".BookMarkActivity">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="83dp"
-        android:layout_height="73dp"
-        android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+    <ListView
+        android:id="@+id/list_bookMark"
+        android:layout_width="409dp"
+        android:layout_height="729dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="@tools:sample/date/day_of_week" />
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
