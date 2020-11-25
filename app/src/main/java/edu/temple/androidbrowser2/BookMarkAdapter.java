@@ -1,6 +1,7 @@
 package edu.temple.androidbrowser2;
 
 import android.content.Context;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,10 +13,10 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 public class BookMarkAdapter extends BaseAdapter implements ListAdapter {
-    ArrayList<String> bookMarksList;
+    ArrayList<BookMark> bookMarksList;
     Context context;
 
-    public  BookMarkAdapter(Context context, ArrayList<String> bookMarksList){
+    public  BookMarkAdapter(Context context, ArrayList<BookMark> bookMarksList){
         this.context = context;
         this.bookMarksList = bookMarksList;
     }
@@ -41,21 +42,27 @@ public class BookMarkAdapter extends BaseAdapter implements ListAdapter {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             v = inflater.inflate(R.layout.custom_list, null);
         }
-            TextView bookMarkTextView = (TextView) v.findViewById(R.id.list_item_string);
 
-            bookMarkTextView.setText(bookMarksList.get(i).toString());
+        TextView bookMarkTextView = (TextView) v.findViewById(R.id.list_item_string);
 
-            Button DelButton = (Button) v.findViewById(R.id.delete_btn);
+        bookMarkTextView.setText(bookMarksList.get(i).getSiteTitle());
 
-            DelButton.setOnClickListener(new View.OnClickListener() {
+        Button DelButton = (Button) v.findViewById(R.id.delete_btn);
+
+        DelButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     bookMarksList.remove(i);
                     notifyDataSetChanged();
                 }
-            });
+        });
+        bookMarkTextView.setPadding(5, 8, 8, 5);
+        bookMarkTextView.setGravity(Gravity.CENTER);
+        bookMarkTextView.setTextSize(14);
+
 
 
         return v;
     }
+
 }

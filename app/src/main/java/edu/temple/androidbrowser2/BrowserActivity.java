@@ -9,6 +9,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
+import android.widget.Toast;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -24,22 +26,30 @@ public class BrowserActivity extends AppCompatActivity implements PageViewerFrag
     PageListFragment pageListFragment;
     public ArrayList<PageViewerFragment> viewerArray;
     private static final String LIST_KEY = "fragments";
-
+    private static final String BOOK_KEY = "books";
+    public ArrayList<BookMark> bookmarks;
+    public static BrowserActivity instance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_browser);
+        instance = this;
         /*Get back the original reference of the array list of pageViewerFragment*/
         if (savedInstanceState != null) {
             viewerArray = (ArrayList<PageViewerFragment>) savedInstanceState.getSerializable(LIST_KEY);
+            bookmarks = (ArrayList<BookMark>) savedInstanceState.getSerializable(BOOK_KEY);
         } else {
             viewerArray = new ArrayList<>();
+            bookmarks = new ArrayList<>();
         }
         /*To have less confusion in onCreate()*/
         addFragments();
 
 
+    }
+    public static BrowserActivity getInstance() {
+        return instance;
     }
     public void addFragments(){
         fragmentManager = getSupportFragmentManager();
@@ -143,12 +153,18 @@ public class BrowserActivity extends AppCompatActivity implements PageViewerFrag
     @Override
     public void goToBookmarks() {
         Intent goToBookMarkActivity = new Intent(getApplicationContext(), BookMarkActivity.class);
+        /*Put parcelable array list here*/
+        goToBookMarkActivity.putParcelableArrayListExtra("BOOKMARKS_ARRAYLIST", bookmarks);
         startActivity(goToBookMarkActivity);
     }
 
     @Override
     public void addBookmarks() {
+        String URL = viewerArray.get(pagerFragment.myViewPager.getCurrentItem()).webView.getUrl();
+        String siteTitle = viewerArray.get(pagerFragment.myViewPager.getCurrentItem()).webView.getTitle() ;
+        BookMark toAdd = new BookMark(URL, siteTitle);
 
+        bookmarks.add(toAdd);
     }
 
     @Override
@@ -165,6 +181,7 @@ public class BrowserActivity extends AppCompatActivity implements PageViewerFrag
     protected void onSaveInstanceState (Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putSerializable(LIST_KEY, viewerArray);
+        outState.putSerializable(BOOK_KEY, bookmarks);
     }
 
     @Override
