@@ -6,13 +6,18 @@ import androidx.fragment.app.FragmentManager;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import java.io.Serializable;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 
@@ -27,6 +32,8 @@ public class BrowserActivity extends AppCompatActivity implements PageViewerFrag
     public ArrayList<PageViewerFragment> viewerArray;
     private static final String LIST_KEY = "fragments";
     private static final String BOOK_KEY = "books";
+    private static final String SHARED_PREFS= "MY_SHARED_PREF";
+    private static final String SAVE_KEY= "TASK_LIST";
     public ArrayList<BookMark> bookmarks;
     public static BrowserActivity instance;
 
@@ -169,6 +176,7 @@ public class BrowserActivity extends AppCompatActivity implements PageViewerFrag
         String siteTitle = viewerArray.get(pagerFragment.myViewPager.getCurrentItem()).webView.getTitle() ;
         BookMark toAdd = new BookMark(URL, siteTitle);
         bookmarks.add(toAdd);
+        saveList();
     }
 
     @Override
@@ -196,6 +204,16 @@ public class BrowserActivity extends AppCompatActivity implements PageViewerFrag
     @Override
     public ViewPager getViewPager() {
         return pagerFragment.myViewPager;
+    }
+
+    public void saveList(){
+        SharedPreferences sp = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(bookmarks);
+        editor.putString(SAVE_KEY, json);
+        editor.commit();
+
     }
 
 
