@@ -1,5 +1,6 @@
 package edu.temple.androidbrowser2;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -50,10 +52,36 @@ public class BookMarkAdapter extends BaseAdapter implements ListAdapter {
         Button DelButton = (Button) v.findViewById(R.id.delete_btn);
 
         DelButton.setOnClickListener(new View.OnClickListener() {
+
                 @Override
                 public void onClick(View view) {
-                    bookMarksList.remove(i);
-                    notifyDataSetChanged();
+                    final AlertDialog alertDialog =  new AlertDialog.Builder(context)
+                            .setTitle("Delete Bookmark")
+                            .setMessage("Remove bookmarks from the bookmark list?")
+                            .setPositiveButton("Yes", null)
+                            .setNegativeButton("No", null)
+                            .show();
+
+                    Button yesButton = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                    Button noButton = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE);
+
+                    yesButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Toast.makeText(context, "Removed from bookmark list", Toast.LENGTH_SHORT).show();
+                            removeBookMark(i);
+                            alertDialog.dismiss();
+                        }
+                    });
+
+                    noButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            alertDialog.dismiss();
+                        }
+                    });
+
+
                 }
         });
         bookMarkTextView.setPadding(5, 8, 8, 5);
@@ -63,6 +91,11 @@ public class BookMarkAdapter extends BaseAdapter implements ListAdapter {
 
 
         return v;
+    }
+
+    public void removeBookMark(int i ){
+        bookMarksList.remove(i);
+        notifyDataSetChanged();
     }
 
 }

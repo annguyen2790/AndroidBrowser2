@@ -35,7 +35,6 @@ public class BookMarkActivity extends AppCompatActivity {
                 bi.openNewPage();
                 bi.okPress(loadUrl);
                 finish();
-
             }
 
         });

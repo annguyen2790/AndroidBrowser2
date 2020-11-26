@@ -101,6 +101,7 @@ public class BrowserActivity extends AppCompatActivity implements PageViewerFrag
     @Override
     public void updateURL(String url) {
         pageControlFragment.editText.setText(viewerArray.get(pagerFragment.myViewPager.getCurrentItem()).webView.getUrl());
+        pagerFragment.myViewPager.getAdapter().notifyDataSetChanged();
     }
 
     @Override
@@ -124,11 +125,15 @@ public class BrowserActivity extends AppCompatActivity implements PageViewerFrag
         }
         /*Load the url*/
         if(!urlInput.startsWith("https://")){
-            pageControlFragment.editText.setText(urlInput);
             viewerArray.get(pagerFragment.myViewPager.getCurrentItem()).okPressed("https://" + urlInput);
+            String yolo = viewerArray.get(pagerFragment.myViewPager.getCurrentItem()).webView.getUrl();
+            pagerFragment.myViewPager.getAdapter().notifyDataSetChanged();
+            pageControlFragment.editText.setText(yolo);
+
         }else {
-            pageControlFragment.editText.setText(urlInput);
             viewerArray.get(pagerFragment.myViewPager.getCurrentItem()).okPressed(urlInput);
+            String yolo = viewerArray.get(pagerFragment.myViewPager.getCurrentItem()).webView.getUrl();
+            pageControlFragment.editText.setText(yolo);
         }
 
 
@@ -163,7 +168,6 @@ public class BrowserActivity extends AppCompatActivity implements PageViewerFrag
         String URL = viewerArray.get(pagerFragment.myViewPager.getCurrentItem()).webView.getUrl();
         String siteTitle = viewerArray.get(pagerFragment.myViewPager.getCurrentItem()).webView.getTitle() ;
         BookMark toAdd = new BookMark(URL, siteTitle);
-
         bookmarks.add(toAdd);
     }
 
