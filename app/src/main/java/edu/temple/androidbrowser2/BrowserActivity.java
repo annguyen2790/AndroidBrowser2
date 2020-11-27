@@ -50,6 +50,7 @@ public class BrowserActivity extends AppCompatActivity implements PageViewerFrag
             viewerArray = new ArrayList<>();
             bookmarks = new ArrayList<>();
         }
+        loadArray();
         /*To have less confusion in onCreate()*/
         addFragments();
 
@@ -176,7 +177,7 @@ public class BrowserActivity extends AppCompatActivity implements PageViewerFrag
         String siteTitle = viewerArray.get(pagerFragment.myViewPager.getCurrentItem()).webView.getTitle() ;
         BookMark toAdd = new BookMark(URL, siteTitle);
         bookmarks.add(toAdd);
-        saveList();
+        //saveList();
     }
 
     @Override
@@ -206,6 +207,12 @@ public class BrowserActivity extends AppCompatActivity implements PageViewerFrag
         return pagerFragment.myViewPager;
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        saveList();
+    }
+
     public void saveList(){
         SharedPreferences sp = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
@@ -213,6 +220,19 @@ public class BrowserActivity extends AppCompatActivity implements PageViewerFrag
         String json = gson.toJson(bookmarks);
         editor.putString(SAVE_KEY, json);
         editor.commit();
+
+    }
+
+    public void loadArray(){
+        SharedPreferences sp = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        String json = sp.getString(SAVE_KEY, null);
+        Gson gson = new Gson();
+        Type type = new TypeToken<ArrayList<BookMark>>() {}.getType();
+        bookmarks = gson.fromJson(json, type);
+
+        if(bookmarks == null){
+            bookmarks = new ArrayList<>();
+        }
 
     }
 

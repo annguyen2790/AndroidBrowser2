@@ -38,10 +38,6 @@ public class BookMarkActivity extends AppCompatActivity {
         Intent toget = getIntent();
         bookMarksList = toget.getParcelableArrayListExtra("BOOKMARKS_ARRAYLIST");
 
-        bookMarksList = loadArray();
-
-        Log.e("HSHS", bookMarksList.get(0).getSiteTitle());
-
         bookMarkListView = (ListView) findViewById(R.id.list_bookMark);
 
 
@@ -65,35 +61,5 @@ public class BookMarkActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        saveList();
 
-
-    }
-
-    public void saveList(){
-        SharedPreferences sp = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        SharedPreferences.Editor editor = sp.edit();
-        Gson gson = new Gson();
-        String json = gson.toJson(bookMarksList);
-        editor.putString(SAVE_KEY, json);
-        editor.commit();
-
-    }
-
-    public ArrayList<BookMark> loadArray(){
-        SharedPreferences sp = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        String json = sp.getString(SAVE_KEY, null);
-        Gson gson = new Gson();
-        Type type = new TypeToken<ArrayList<BookMark>>() {}.getType();
-        bookMarksList = gson.fromJson(json, type);
-
-        if(bookMarksList == null){
-            bookMarksList = new ArrayList<>();
-        }
-        return  bookMarksList;
-
-    }
 }
