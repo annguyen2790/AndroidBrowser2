@@ -51,9 +51,16 @@ public class BookMarkActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Toast.makeText(getApplication(), bookMarksList.get(i).getURL(), Toast.LENGTH_SHORT).show();
                 String loadUrl = bookMarksList.get(i).getURL();
+
                 BrowserActivity bi = BrowserActivity.getInstance();
                 bi.openNewPage();
                 bi.okPress(loadUrl);
+
+                Intent resultIntent = new Intent ();
+
+                resultIntent.putParcelableArrayListExtra("resultArray", bookMarksList );
+                setResult(RESULT_OK, resultIntent);
+
                 finish();
             }
 

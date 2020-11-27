@@ -1,5 +1,6 @@
 package edu.temple.androidbrowser2;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -168,7 +169,13 @@ public class BrowserActivity extends AppCompatActivity implements PageViewerFrag
         Intent goToBookMarkActivity = new Intent(getApplicationContext(), BookMarkActivity.class);
         /*Put parcelable array list here*/
         goToBookMarkActivity.putParcelableArrayListExtra("BOOKMARKS_ARRAYLIST", bookmarks);
-        startActivity(goToBookMarkActivity);
+        startActivityForResult(goToBookMarkActivity, 1);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        bookmarks = data.getParcelableArrayListExtra("resultArray");
     }
 
     @Override
