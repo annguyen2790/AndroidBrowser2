@@ -75,7 +75,7 @@ public class BrowserControlFragment extends Fragment implements Serializable {
         goToBookmark.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(), "Going to Bookmark ", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), "Going to Bookmark ", Toast.LENGTH_SHORT).show();
                 browserControlListner.goToBookmarks();
             }
         });

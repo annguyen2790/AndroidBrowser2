@@ -8,8 +8,20 @@
 
     <ListView
         android:id="@+id/list_bookMark"
-        android:layout_width="409dp"
-        android:layout_height="729dp"
+        android:layout_width="417dp"
+        android:layout_height="579dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+    </ListView>
+
+    <Button
+        android:id="@+id/closeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="160dp"
+        android:layout_marginTop="12dp"
+        android:text="Close"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/list_bookMark" />
 </androidx.constraintlayout.widget.ConstraintLayout>

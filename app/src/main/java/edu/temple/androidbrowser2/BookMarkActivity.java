@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -25,7 +26,7 @@ public class BookMarkActivity extends AppCompatActivity {
 
     private static final String SHARED_PREFS= "MY_SHARED_PREF";
     private static final String SAVE_KEY= "TASK_LIST";
-    SharedPreferences sharedPreferences;
+    Button closedButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +67,32 @@ public class BookMarkActivity extends AppCompatActivity {
 
         });
 
+        closedButton = findViewById(R.id.closeButton);
+        closedButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try{
+                    Intent intent = new Intent(BookMarkActivity.this, BrowserActivity.class);
+                    startActivity(intent);
+                }catch (Exception e){
+                    Toast.makeText(getApplicationContext(), "ERROR", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+
+
+
     }
 
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        try{
+            Intent intent = new Intent(BookMarkActivity.this, BrowserActivity.class);
+            startActivity(intent);
+        }catch (Exception e){
+            Toast.makeText(getApplicationContext(), "ERROR", Toast.LENGTH_SHORT).show();
+        }
+    }
 }
