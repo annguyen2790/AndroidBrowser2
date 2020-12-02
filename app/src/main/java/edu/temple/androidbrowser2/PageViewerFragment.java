@@ -76,6 +76,12 @@ public class PageViewerFragment extends Fragment implements Serializable {
                     super.onPageStarted(view, url, favicon);
                     pvListener.updateURL(url);
                 }
+
+                @Override
+                public void onPageFinished(WebView view, String url) {
+                    super.onPageFinished(view, url);
+                    pvListener.updateURL(url);
+                }
             });
             if(savedInstanceState != null){
                 webView.restoreState(savedInstanceState);
