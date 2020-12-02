@@ -29,6 +29,8 @@ public class BrowserControlFragment extends Fragment implements Serializable {
 
     interface browserControlInterface{
         void openNewPage();
+        void goToBookmarks();
+        void addBookmarks();
     }
 
     @Override
@@ -65,6 +67,7 @@ public class BrowserControlFragment extends Fragment implements Serializable {
             @Override
             public void onClick(View view) {
                 Toast.makeText(getActivity(), "Adding Bookmark", Toast.LENGTH_SHORT).show();
+                browserControlListner.addBookmarks();
             }
         });
 
@@ -73,6 +76,7 @@ public class BrowserControlFragment extends Fragment implements Serializable {
             @Override
             public void onClick(View view) {
                 Toast.makeText(getActivity(), "Going to Bookmark ", Toast.LENGTH_SHORT).show();
+                browserControlListner.goToBookmarks();
             }
         });
 
