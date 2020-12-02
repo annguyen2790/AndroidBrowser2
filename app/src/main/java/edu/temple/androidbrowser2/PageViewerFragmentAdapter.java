@@ -8,9 +8,10 @@ import android.widget.TextView;
 
 import androidx.viewpager.widget.ViewPager;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class PageViewerFragmentAdapter extends BaseAdapter {
+public class PageViewerFragmentAdapter extends BaseAdapter implements Serializable {
 
     ArrayList<PageViewerFragment> viewerArray;
     final Context context;

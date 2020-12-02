@@ -12,10 +12,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 
-public class PagerFragment extends Fragment {
+public class PagerFragment extends Fragment implements Serializable {
 
     View v;
     ViewPager myViewPager;

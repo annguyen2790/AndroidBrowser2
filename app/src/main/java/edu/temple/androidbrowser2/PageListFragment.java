@@ -14,10 +14,11 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 
-public class PageListFragment extends Fragment {
+public class PageListFragment extends Fragment implements Serializable {
     View v;
     PageListInterface pageListListener;
     ArrayList<PageViewerFragment> viewersList;

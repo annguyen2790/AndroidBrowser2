@@ -5,11 +5,13 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager.widget.ViewPager;
 import android.os.Bundle;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 
 
 public class BrowserActivity extends AppCompatActivity implements PageViewerFragment.pageViewerInterface, PageControlFragment.PageControlListener,
-    BrowserControlFragment.browserControlInterface, PagerFragment.PagerFragmentInterface, PageListFragment.PageListInterface {
+    BrowserControlFragment.browserControlInterface, PagerFragment.PagerFragmentInterface, PageListFragment.PageListInterface, Serializable {
 
     PagerFragment pagerFragment;
     FragmentManager fragmentManager;

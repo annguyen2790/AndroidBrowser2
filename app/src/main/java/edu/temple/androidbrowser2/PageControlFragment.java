@@ -14,8 +14,10 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import java.io.Serializable;
 
-public class PageControlFragment extends Fragment {
+
+public class PageControlFragment extends Fragment implements Serializable {
 
     EditText editText;
     ImageButton okButton;

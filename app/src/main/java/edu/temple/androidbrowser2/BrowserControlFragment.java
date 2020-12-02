@@ -13,7 +13,9 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-public class BrowserControlFragment extends Fragment {
+import java.io.Serializable;
+
+public class BrowserControlFragment extends Fragment implements Serializable {
     ImageButton addTab;
     ImageButton addBookmark;
     ImageButton goToBookmark;
