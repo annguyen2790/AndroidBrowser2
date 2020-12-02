@@ -144,6 +144,16 @@ public class BrowserActivity extends AppCompatActivity implements PageViewerFrag
     }
 
     @Override
+    public void goToBookmarks() {
+
+    }
+
+    @Override
+    public void addBookmarks() {
+
+    }
+
+    @Override
     public ArrayList<PageViewerFragment> getPageViewerList() {
         return viewerArray;
     }
