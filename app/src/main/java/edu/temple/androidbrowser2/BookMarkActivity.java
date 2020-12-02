@@ -38,9 +38,7 @@ public class BookMarkActivity extends AppCompatActivity {
 
         Intent toget = getIntent();
         bookMarksList = toget.getParcelableArrayListExtra("BOOKMARKS_ARRAYLIST");
-
         bookMarkListView = (ListView) findViewById(R.id.list_bookMark);
-
 
      
 
@@ -58,8 +56,7 @@ public class BookMarkActivity extends AppCompatActivity {
                 bi.okPress(loadUrl);
 
                 Intent resultIntent = new Intent ();
-
-                resultIntent.putParcelableArrayListExtra("resultArray", bookMarksList );
+                resultIntent.putParcelableArrayListExtra("resultArray", bookMarksList);
                 setResult(RESULT_OK, resultIntent);
 
                 finish();

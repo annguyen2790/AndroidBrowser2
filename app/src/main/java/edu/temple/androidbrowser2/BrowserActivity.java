@@ -51,6 +51,7 @@ public class BrowserActivity extends AppCompatActivity implements PageViewerFrag
             viewerArray = new ArrayList<>();
             bookmarks = new ArrayList<>();
         }
+
         loadArray();
         /*To have less confusion in onCreate()*/
         addFragments();
@@ -175,7 +176,14 @@ public class BrowserActivity extends AppCompatActivity implements PageViewerFrag
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        bookmarks = data.getParcelableArrayListExtra("resultArray");
+        if(requestCode == 1){
+            bookmarks = data.getParcelableArrayListExtra("resultArray");
+            if (resultCode == RESULT_CANCELED) {
+                Toast.makeText(getApplicationContext(), "GG", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+
     }
 
     @Override
@@ -226,7 +234,7 @@ public class BrowserActivity extends AppCompatActivity implements PageViewerFrag
         Gson gson = new Gson();
         String json = gson.toJson(bookmarks);
         editor.putString(SAVE_KEY, json);
-        editor.commit();
+        editor.apply();
 
     }
 
