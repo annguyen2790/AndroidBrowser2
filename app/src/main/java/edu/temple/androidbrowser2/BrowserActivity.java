@@ -6,8 +6,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager.widget.ViewPager;
 
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -19,6 +21,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.io.Serializable;
 import java.lang.reflect.Type;
+import java.net.URI;
 import java.util.ArrayList;
 
 
@@ -37,6 +40,8 @@ public class BrowserActivity extends AppCompatActivity implements PageViewerFrag
     private static final String SAVE_KEY= "TASK_LIST";
     public ArrayList<BookMark> bookmarks;
     public static BrowserActivity instance;
+    Intent intent;
+    PendingIntent intent2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +60,30 @@ public class BrowserActivity extends AppCompatActivity implements PageViewerFrag
         loadArray();
         /*To have less confusion in onCreate()*/
         addFragments();
+
+        /*For the implicit intent response*/
+        intent = getIntent();
+        String receivedAction = intent.getAction();
+        Uri data = intent.getData();
+        if(receivedAction.equals(Intent.ACTION_VIEW)){
+            Log.e("check 1", "action");
+        }
+        if(data == null){
+            Log.e("check data", "data is null");
+        }else{
+            Log.e("check data", "data is not null");
+            String url = data.toString();
+            Log.e("Check url", url);
+
+        }
+
+
+
+
+
+
+    }
+    public void loadPage(String url){
 
 
     }
@@ -159,7 +188,7 @@ public class BrowserActivity extends AppCompatActivity implements PageViewerFrag
         //add pages. Profit!
         viewerArray.add(new PageViewerFragment());
         pagerFragment.myViewPager.getAdapter().notifyDataSetChanged();
-        pagerFragment.myViewPager.setCurrentItem(viewerArray.size()  - 1);
+        pagerFragment.myViewPager.setCurrentItem(viewerArray.size() - 1);
 
 
 
@@ -182,6 +211,11 @@ public class BrowserActivity extends AppCompatActivity implements PageViewerFrag
                 Toast.makeText(getApplicationContext(), "GG", Toast.LENGTH_SHORT).show();
             }
         }
+        //intent = getIntent();
+
+
+
+
 
 
     }
