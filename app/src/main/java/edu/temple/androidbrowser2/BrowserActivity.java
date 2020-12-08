@@ -102,11 +102,10 @@ public class BrowserActivity extends AppCompatActivity implements PageViewerFrag
     @Override
     protected void onStart() {
         super.onStart();
-        viewerArray.add( new PageViewerFragment());
-        pagerFragment.myViewPager.getAdapter().notifyDataSetChanged();
-        //openNewPage();
-        //okPress(url2);
-
+        if(viewerArray.size() == 0) {
+            viewerArray.add(new PageViewerFragment());
+            pagerFragment.myViewPager.getAdapter().notifyDataSetChanged();
+        }
 
     }
 
@@ -121,7 +120,7 @@ public class BrowserActivity extends AppCompatActivity implements PageViewerFrag
             if(viewerArray.get(0) != null){
                 //Toast.makeText(getApplicationContext(), "This shit is null", Toast.LENGTH_LONG).show();
                 if(viewerArray.get(0).webView == null){
-                    Toast.makeText(getApplicationContext(), "WEBVIEW shit is null", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "", Toast.LENGTH_LONG).show();
 
                 }
             }

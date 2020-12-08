@@ -77,12 +77,12 @@ public class PagerFragment extends Fragment {
                 super.finishUpdate(container);
                 String URLfromIntent = pagerFragmentListener.giveMeURLfromIntent();
                 String ActionIntent = pagerFragmentListener.checkAction();
-                if(ActionIntent.equals(Intent.ACTION_VIEW)){
-                    viewerFragmentsArray.get(myViewPager.getCurrentItem()).webView.loadUrl(URLfromIntent);
-                }else{
-
+                if(URLfromIntent != null && viewerFragmentsArray.size() == 1 && !URLfromIntent.equals("https://Enter a url")){
+                    viewerFragmentsArray.get(myViewPager.getCurrentItem()).webView.loadUrl(URLfromIntent); 
                 }
             }
+
+
         });
 
         myViewPager.addOnPageChangeListener( new ViewPager.SimpleOnPageChangeListener(){
@@ -94,6 +94,7 @@ public class PagerFragment extends Fragment {
                 String url = viewerFragmentsArray.get(position).webView.getUrl();
                 if(url == null){
                     pagerFragmentListener.updateNewUrl("https:// Enter a url");
+
                 }
                 if(url != null){
                     pagerFragmentListener.updateNewUrl(url);
