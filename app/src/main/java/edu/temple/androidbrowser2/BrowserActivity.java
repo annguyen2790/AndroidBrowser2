@@ -89,7 +89,6 @@ public class BrowserActivity extends AppCompatActivity implements PageViewerFrag
                 if(getUrl == null){
                     getUrl = "Web site link broken!";
                 }
-                String shareBodyText = "Check it out. Your message goes here";
                 sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, getUrl);
                 startActivity(Intent.createChooser(sharingIntent, "Sharing Option:"));
                 return true;
