@@ -21,9 +21,9 @@ import android.webkit.WebViewClient;
 import java.io.Serializable;
 
 
-public class PageViewerFragment extends Fragment implements Parcelable  {
+public class PageViewerFragment extends Fragment implements Parcelable {
     View v;
-    WebView webView;
+    public WebView webView;
     pageViewerInterface pvListener;
 
     public PageViewerFragment() {
@@ -56,20 +56,19 @@ public class PageViewerFragment extends Fragment implements Parcelable  {
 
 
     //declare interface to
-    interface pageViewerInterface{
+    interface pageViewerInterface {
         void updateURL(String url);
     }
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        if(context instanceof pageViewerInterface){
+        if (context instanceof pageViewerInterface) {
             pvListener = (pageViewerInterface) context;
-        }else{
+        } else {
             throw new RuntimeException("Please implement pageViewerInterface");
         }
     }
-
 
 
     @Override
@@ -77,6 +76,7 @@ public class PageViewerFragment extends Fragment implements Parcelable  {
         super.onSaveInstanceState(outState);
         webView.saveState(outState);
     }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,30 +94,30 @@ public class PageViewerFragment extends Fragment implements Parcelable  {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         //restore web session
-        if(savedInstanceState == null){
-            v = inflater.inflate(R.layout.fragment_page_viewer, container, false);
-            webView = v.findViewById(R.id.web_view);
-            webView.getSettings().setJavaScriptEnabled(true);
-            webView.setWebViewClient(new WebViewClient(){
-                @Override
-                public void onPageStarted(WebView view, String url, Bitmap favicon) {
-                    super.onPageStarted(view, url, favicon);
-                    pvListener.updateURL(url);
-                }
-
-                @Override
-                public void onPageFinished(WebView view, String url) {
-                    super.onPageFinished(view, url);
-                    pvListener.updateURL(url);
-                }
-            });
-            if(savedInstanceState != null){
-                webView.restoreState(savedInstanceState);
+        v = inflater.inflate(R.layout.fragment_page_viewer, container, false);
+        webView = v.findViewById(R.id.web_view);
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                super.onPageStarted(view, url, favicon);
+                pvListener.updateURL(url);
             }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                pvListener.updateURL(url);
+            }
+        });
+        if (savedInstanceState != null) {
+            webView.restoreState(savedInstanceState);
         }
 
+
+
         return v;
-    }
+}
 
     public void goFor(){
         webView.goForward();
@@ -127,7 +127,7 @@ public class PageViewerFragment extends Fragment implements Parcelable  {
         webView.goBack();
     }
 
-    public void okPressed(String url){ webView.loadUrl(url); }
+     public void okPressed(String url){ webView.loadUrl(url); }
 
     public String getLink(){
         return webView.getTitle();

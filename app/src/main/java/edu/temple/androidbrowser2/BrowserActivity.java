@@ -9,11 +9,15 @@ import androidx.viewpager.widget.ViewPager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.pdf.PdfDocument;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.webkit.WebView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -42,7 +46,7 @@ public class BrowserActivity extends AppCompatActivity implements PageViewerFrag
     public static BrowserActivity instance;
     Intent intent;
     PendingIntent intent2;
-
+    String url2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,21 +65,6 @@ public class BrowserActivity extends AppCompatActivity implements PageViewerFrag
         /*To have less confusion in onCreate()*/
         addFragments();
 
-        /*For the implicit intent response*/
-        intent = getIntent();
-        String receivedAction = intent.getAction();
-        Uri data = intent.getData();
-        if(receivedAction.equals(Intent.ACTION_VIEW)){
-            Log.e("check 1", "action");
-        }
-        if(data == null){
-            Log.e("check data", "data is null");
-        }else{
-            Log.e("check data", "data is not null");
-            String url = data.toString();
-            Log.e("Check url", url);
-
-        }
 
 
 
@@ -83,7 +72,67 @@ public class BrowserActivity extends AppCompatActivity implements PageViewerFrag
 
 
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menushare, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_share:
+
+                Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+                sharingIntent.setType("text/plain");
+                String getUrl = viewerArray.get(pagerFragment.myViewPager.getCurrentItem()).webView.getUrl();
+                if(getUrl == null){
+                    getUrl = "Web site link broken!";
+                }
+                String shareBodyText = "Check it out. Your message goes here";
+                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, getUrl);
+                startActivity(Intent.createChooser(sharingIntent, "Sharing Option:"));
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        viewerArray.add( new PageViewerFragment());
+        pagerFragment.myViewPager.getAdapter().notifyDataSetChanged();
+        //openNewPage();
+        //okPress(url2);
+
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        intent = getIntent();
+        String receivedAction = intent.getAction();
+        Uri data = intent.getData();
+        if(receivedAction.equals(Intent.ACTION_VIEW)) {
+            Log.e("check 1", "action");
+            if(viewerArray.get(0) != null){
+                //Toast.makeText(getApplicationContext(), "This shit is null", Toast.LENGTH_LONG).show();
+                if(viewerArray.get(0).webView == null){
+                    Toast.makeText(getApplicationContext(), "WEBVIEW shit is null", Toast.LENGTH_LONG).show();
+
+                }
+            }
+        }
+
+
+    }
+
     public void loadPage(String url){
+        viewerArray.add(new PageViewerFragment());
 
 
     }
@@ -171,6 +220,7 @@ public class BrowserActivity extends AppCompatActivity implements PageViewerFrag
 
         }else {
             viewerArray.get(pagerFragment.myViewPager.getCurrentItem()).okPressed(urlInput);
+            pagerFragment.myViewPager.getAdapter().notifyDataSetChanged();
             String yolo = viewerArray.get(pagerFragment.myViewPager.getCurrentItem()).webView.getUrl();
             pageControlFragment.editText.setText(yolo);
         }
@@ -187,6 +237,9 @@ public class BrowserActivity extends AppCompatActivity implements PageViewerFrag
         }
         //add pages. Profit!
         viewerArray.add(new PageViewerFragment());
+        if(pagerFragment.myViewPager.getAdapter() != null){
+            pagerFragment.myViewPager.getAdapter().notifyDataSetChanged();
+        }
         pagerFragment.myViewPager.getAdapter().notifyDataSetChanged();
         pagerFragment.myViewPager.setCurrentItem(viewerArray.size() - 1);
 
@@ -205,12 +258,14 @@ public class BrowserActivity extends AppCompatActivity implements PageViewerFrag
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        bookmarks = data.getParcelableArrayListExtra("resultArray");
         if(requestCode == 1){
             bookmarks = data.getParcelableArrayListExtra("resultArray");
             if (resultCode == RESULT_CANCELED) {
                 Toast.makeText(getApplicationContext(), "GG", Toast.LENGTH_SHORT).show();
             }
         }
+
         //intent = getIntent();
 
 
@@ -237,6 +292,25 @@ public class BrowserActivity extends AppCompatActivity implements PageViewerFrag
     @Override
     public void updateNewUrl(String url) {
         pageControlFragment.editText.setText(url);
+    }
+
+    @Override
+    public String giveMeURLfromIntent() {
+        intent = getIntent();
+        String receivedAction = intent.getAction();
+        Uri data = intent.getData();
+        if(data == null){
+            return "https//google.com";
+        }
+        return data.toString();
+    }
+
+    @Override
+    public String checkAction() {
+        intent = getIntent();
+        String receivedAction = intent.getAction();
+        Uri data = intent.getData();
+        return receivedAction;
     }
 
     @Override
@@ -284,6 +358,7 @@ public class BrowserActivity extends AppCompatActivity implements PageViewerFrag
         }
 
     }
+
 
 
 }

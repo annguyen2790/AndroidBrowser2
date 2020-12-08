@@ -1,6 +1,7 @@
 package edu.temple.androidbrowser2;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 public class PagerFragment extends Fragment {
 
     View v;
-    ViewPager myViewPager;
+    public ViewPager myViewPager;
     PagerFragmentInterface pagerFragmentListener;
     ArrayList<PageViewerFragment> viewerFragmentsArray;
 
@@ -30,6 +31,8 @@ public class PagerFragment extends Fragment {
     interface PagerFragmentInterface{
         ArrayList<PageViewerFragment> getPageViewerList();
         void updateNewUrl(String url);
+        String giveMeURLfromIntent();
+        String checkAction();
     }
 
     @Override
@@ -67,6 +70,18 @@ public class PagerFragment extends Fragment {
             @Override
             public int getCount() {
                 return viewerFragmentsArray.size();
+            }
+
+            @Override
+            public void finishUpdate(@NonNull ViewGroup container) {
+                super.finishUpdate(container);
+                String URLfromIntent = pagerFragmentListener.giveMeURLfromIntent();
+                String ActionIntent = pagerFragmentListener.checkAction();
+                if(ActionIntent.equals(Intent.ACTION_VIEW)){
+                    viewerFragmentsArray.get(myViewPager.getCurrentItem()).webView.loadUrl(URLfromIntent);
+                }else{
+
+                }
             }
         });
 
