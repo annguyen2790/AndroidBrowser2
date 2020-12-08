@@ -120,7 +120,7 @@ public class BrowserActivity extends AppCompatActivity implements PageViewerFrag
             if(viewerArray.get(0) != null){
                 //Toast.makeText(getApplicationContext(), "This shit is null", Toast.LENGTH_LONG).show();
                 if(viewerArray.get(0).webView == null){
-                    Toast.makeText(getApplicationContext(), "", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getApplicationContext(), "", Toast.LENGTH_LONG).show();
 
                 }
             }
